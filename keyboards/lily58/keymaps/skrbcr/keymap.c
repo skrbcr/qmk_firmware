@@ -13,10 +13,6 @@ enum custom_keycodes {
   C_RAISE,
 };
 
-/* enum { */
-/*   TD_ZKHK,  // 全角半角 */
-/* }; */
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
  [_QWERTY] = LAYOUT(
@@ -52,10 +48,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
-
-/* qk_tap_dance_action_t tap_dance_actions[] = { */
-/*     [TD_ZKHK] = ACTION_TAP_DANCE_DOUBLE(JP_MHEN, JP_HENK), */
-/* }; */
 
 //SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
@@ -94,7 +86,11 @@ bool oled_task_user(void) {
 }
 #endif // OLED_ENABLE
 
-/* static bool tab_pressed = false; */
+// Combos
+const uint16_t PROGMEM combo1[] = {KC_LSFT, KC_LWIN, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(combo1, KC_LCTL),
+};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
