@@ -24,8 +24,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [_LOWER] = LAYOUT(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______, JP_1,    JP_2,    JP_3,    JP_4,    JP_5,                      JP_6,    JP_7,    JP_8,    JP_9,    JP_0,    _______,
-  JP_ZKHK, JP_MINS, JP_CIRC, JP_YEN,  JP_AT,   XXXXXXX,                   JP_PLUS, JP_LBRC, JP_RBRC, JP_BSLS, JP_COLN, _______,
+  _______,    JP_1,    JP_2,    JP_3,    JP_4,    JP_5,                      JP_6,    JP_7,    JP_8,    JP_9,    JP_0, _______,
+  JP_ZKHK, JP_MINS, JP_CIRC,  JP_YEN,   JP_AT, XXXXXXX,                   XXXXXXX, JP_LBRC, JP_RBRC, JP_BSLS, JP_COLN, _______,
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, KC_TAB, _______,  _______, _______, _______
 ),
@@ -33,14 +33,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                   XXXXXXX,  KC_END, KC_HOME, XXXXXXX, XXXXXXX, _______,
   JP_HENK,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                   KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______,
-  KC_LCTL,  KC_F11,  KC_F12, KC_COPY, KC_PSTE,  KC_CUT, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
+  KC_LCTL,  KC_F11,  KC_F12,  KC_APP, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, _______, _______, _______, _______, _______
 ),
 [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRIU, KC_BRID,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, KC_PSCR,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______, XXXXXXX, XXXXXXX,  KC_INS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  _______, KC_MAIL, XXXXXXX,  KC_INS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
   )
 };
