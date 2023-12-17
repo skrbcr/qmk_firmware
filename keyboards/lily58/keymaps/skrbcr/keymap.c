@@ -6,11 +6,13 @@ enum layer_number {
   _LOWER,
   _RAISE,
   _ADJUST,
+  _GIMP,
 };
 
 enum custom_keycodes {
   C_LOWER = SAFE_RANGE,
   C_RAISE,
+  LEAD_C,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -18,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_QWERTY] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
    KC_ESC,    JP_Q,    JP_W,    JP_E,    JP_R,    JP_T,                      JP_Y,    JP_U,    JP_I,    JP_O,    JP_P, KC_BSPC,
-  JP_MHEN,  JP_A,    JP_S,    JP_D,    JP_F,    JP_G,                      JP_H,    JP_J,    JP_K,    JP_L, KC_SCLN,  KC_DEL,
+  JP_MHEN,    JP_A,    JP_S,    JP_D,    JP_F,    JP_G,                      JP_H,    JP_J,    JP_K,    JP_L, KC_SCLN,  KC_DEL,
   KC_LWIN,    JP_Z,    JP_X,    JP_C,    JP_V,    JP_B, XXXXXXX, XXXXXXX,    JP_N,    JP_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LALT,
                              XXXXXXX, C_RAISE, KC_LSFT,  KC_SPC,  KC_ENT, KC_LCTL, C_LOWER, XXXXXXX
 ),
@@ -38,11 +40,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRIU, KC_BRID,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, KC_PSCR,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______, KC_MAIL, XXXXXXX,  KC_INS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, KC_BRIU, KC_BRID,                   XXXXXXX, KC_KP_7, KC_KP_8, KC_KP_9, XXXXXXX, XXXXXXX,
+  XXXXXXX, KC_MPRV, KC_MPLY, KC_MNXT, XXXXXXX, KC_PSCR,                   XXXXXXX, KC_KP_4, KC_KP_5, KC_KP_6, XXXXXXX, XXXXXXX,
+  _______, KC_MAIL, XXXXXXX,  KC_INS, XXXXXXX,TO(_GIMP), XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_PDOT, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
-  )
+),
+[_GIMP] = LAYOUT(
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+   KC_ESC, XXXXXXX, XXXXXXX, C(KC_E), C(KC_Y), XXXXXXX,                   XXXXXXX, S(KC_V), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, C(KC_S), XXXXXXX, XXXXXXX,  KC_DEL,                   KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
+  KC_LCTL, C(KC_Z), C(KC_X), C(KC_C), C(KC_V),TO(_QWERTY),XXXXXXX,XXXXXXX,XXXXXXX,  LEAD_C, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                             XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
+),
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -118,9 +127,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
             return false;
+        case LEAD_C:
+            if (record->event.pressed) {
+                SEND_STRING("\\");
+            }
+            return false;
         default:
             break;
     }
     return true;
 }
+
+/* const key_override_t gimp_layer_override = ko_make_basic(MOD_MASK_CTRL, KC_A, TO(_GIMP)); */
+
+/* const key_override_t **key_overrides = (const key_override_t *[]) { */
+/*     &gimp_layer_override, */
+/*     NULL */
+/* }; */
 
