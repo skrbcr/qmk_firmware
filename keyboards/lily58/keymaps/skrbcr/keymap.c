@@ -33,9 +33,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 [_RAISE] = LAYOUT(
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                   XXXXXXX,  KC_END, KC_HOME, XXXXXXX, XXXXXXX, _______,
+  _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                   XXXXXXX, KC_HOME,  KC_END, XXXXXXX, XXXXXXX, _______,
   JP_HENK,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                   KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, _______,
-  KC_LCTL,  KC_F11,  KC_F12,  KC_APP, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN, KC_PGUP, XXXXXXX, XXXXXXX, _______,
+  KC_LCTL,  KC_F11,  KC_F12,  KC_APP, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGUP, KC_PGDN, XXXXXXX, XXXXXXX, _______,
                              _______, _______, _______, _______, _______, _______, _______, _______
 ),
 [_ADJUST] = LAYOUT(
@@ -45,61 +45,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_MAIL, XXXXXXX,  KC_INS, XXXXXXX,TO(_GIMP), XXXXXXX, XXXXXXX, KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_PDOT, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
 ),
-[_GIMP] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-   KC_ESC, XXXXXXX, XXXXXXX, C(KC_E), C(KC_Y), XXXXXXX,                   XXXXXXX, S(KC_V), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, C(KC_S), XXXXXXX, XXXXXXX,  KC_DEL,                   KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,
-  KC_LCTL, C(KC_Z), C(KC_X), C(KC_C), C(KC_V),TO(_QWERTY),XXXXXXX,XXXXXXX,XXXXXXX,  LEAD_C, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
-),
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
-
-//SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
-#ifdef OLED_ENABLE
-
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  return rotation;
-}
-
-// When you add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
-const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
-const char *read_keylog(void);
-const char *read_keylogs(void);
-
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
-bool oled_task_user(void) {
-  if (is_keyboard_master()) {
-    // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
-    oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
-    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-    //oled_write_ln(read_host_led_state(), false);
-    //oled_write_ln(read_timelog(), false);
-  } else {
-    oled_write(read_logo(), false);
-  }
-    return false;
-}
-#endif // OLED_ENABLE
-
-// Combos
-/* const uint16_t PROGMEM combo1[] = {KC_LSFT, KC_LWIN, COMBO_END}; */
-/* combo_t key_combos[] = { */
-/*     COMBO(combo1, KC_LCTL), */
-/* }; */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
@@ -127,21 +77,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
             return false;
-        case LEAD_C:
-            if (record->event.pressed) {
-                SEND_STRING("\\");
-            }
-            return false;
         default:
             break;
     }
     return true;
 }
-
-/* const key_override_t gimp_layer_override = ko_make_basic(MOD_MASK_CTRL, KC_A, TO(_GIMP)); */
-
-/* const key_override_t **key_overrides = (const key_override_t *[]) { */
-/*     &gimp_layer_override, */
-/*     NULL */
-/* }; */
 
